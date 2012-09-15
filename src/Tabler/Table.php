@@ -14,6 +14,7 @@ class Table
    * Constructor
    *
    * @param \Tabler\Connection
+   * @param string
    */
   public function __construct(Connection $db, $tableName = null)
   {
@@ -113,7 +114,7 @@ class Table
     if (!isset($this->tableName)) {
       $class = get_called_class();
       $class = substr($class, strrpos($class, '\\')+1);
-      $this->tableName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $class));
+      $this->tableName = strtolower(preg_replace('/([\w])([\W])/', '$1_$2', $class));
     }
 
     return $this->tableName;

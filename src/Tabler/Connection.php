@@ -32,7 +32,7 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
    */
   public function offsetExists($key)
   {
-    return true;
+    return isset($this->tables[$key]) or class_exists($this->getTableClass($key));
   }
 
 
