@@ -32,8 +32,7 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
    */
   public function offsetExists($key)
   {
-    $class = $this->getTableClass($key);
-    return isset($this->tables[$key]) || class_exists($class);
+    return true;
   }
 
 
@@ -47,7 +46,11 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
   {
     if (!isset($this->tables[$key])) {
       $class = $this->getTableClass($key);
-      $this->tables[$key] = new $class($this);
+      if (class_exists($class)) {
+        $this->tables[$key] = new $class($this);
+      } else {
+        $this->tables[$key] = new Table($this, $key);
+      }
     }
 
     return $this->tables[$key];

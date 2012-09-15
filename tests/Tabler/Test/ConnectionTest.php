@@ -18,8 +18,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     return $this->getMock('Tabler\\Connection', $methods, array(array(), $driver));
   }
 
-  // @todo Flesh this out
-  public function testArrayAccess()
+  public function testOffsetGetClass()
   {
     $conn = $this->getMockConnection(array('getTableClass'));
     $table = $this->getMockForAbstractClass('Tabler\\Table', array($conn));
@@ -28,8 +27,15 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
          ->method('getTableClass')
          ->will($this->returnValue(get_class($table)));
 
-    $this->assertEquals($table, $conn['table']);
+    $this->assertEquals(get_class($table), get_class($conn['table']));
     $this->assertEquals($conn, $conn['table']->getConnection());
+  }
+
+  public function testOffsetGetTable()
+  {
+    $conn = $this->getConnection();
+    $this->assertInstanceOf('Tabler\\Table', $conn['some_table']);
+    $this->assertEquals('some_table', $conn['some_table']->getTableName());
   }
 
   public function testGetTableClass()

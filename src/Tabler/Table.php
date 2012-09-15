@@ -1,21 +1,24 @@
 <?php
 namespace Tabler;
 
-abstract class Table
+class Table
 {
   /**
    * @var \Tabler\Connection
    */
   protected $db;
 
+  protected $tableName;
+
   /**
    * Constructor
    *
    * @param \Tabler\Connection
    */
-  public function __construct(Connection $db)
+  public function __construct(Connection $db, $tableName = null)
   {
     $this->db = $db;
+    $this->tableName = $tableName;
   }
 
 
@@ -118,10 +121,14 @@ abstract class Table
    *
    * @return string
    */
-  static public function getTableName()
+  public function getTableName()
   {
-    $class = get_called_class();
-    $class = substr($class, strrpos($class, '\\')+1);
-    return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $class));
+    if (!isset($this->tableName)) {
+      $class = get_called_class();
+      $class = substr($class, strrpos($class, '\\')+1);
+      $this->tableName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $class));
+    }
+
+    return $this->tableName;
   }
 }

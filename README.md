@@ -22,9 +22,10 @@ $connection->findAll('users', ['gender' => 'm'], 10);
 
 Creates new classes under "namespace" by array access.
 New objects are injected the Connection instance.
+If no class is found, a virtual table class is created.
 
 ```php
-# new App\Users($connection)
+# new App\Users($connection) if it exists
 $users = $connection['users'];
 
 # SELECT * FROM users WHERE id = 1
