@@ -34,19 +34,6 @@ class Table
 
 
   /**
-   * Set connection
-   *
-   * @param \Tabler\Connection
-   * @return \Tabler\Model
-   */
-  public function setConnection(Connection $db)
-  {
-    $this->db = $db;
-    return $this;
-  }
-
-
-  /**
    * Inserts a table row with specified data.
    *
    * @param array $data An associative array containing column-value pairs.
