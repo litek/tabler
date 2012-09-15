@@ -1,5 +1,6 @@
 <?php
 namespace Tabler\Test;
+use Tabler\Table;
 
 class TableTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +13,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
   public function testInsert()
   {
     $conn  = $this->getMockConnection(array('insert'));
-    $table = $this->getMockForAbstractClass('Tabler\\Table', array($conn));
+    $table = new Table($conn);
 
     $conn->expects($this->once())
          ->method('insert')
@@ -24,7 +25,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
   public function testUpdate()
   {
     $conn  = $this->getMockConnection(array('update'));
-    $table = $this->getMockForAbstractClass('Tabler\\Table', array($conn));
+    $table = new Table($conn);
 
     $conn->expects($this->once())
          ->method('update')
@@ -36,7 +37,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
   public function testDelete()
   {
     $conn  = $this->getMockConnection(array('delete'));
-    $table = $this->getMockForAbstractClass('Tabler\\Table', array($conn));
+    $table = new Table($conn);
 
     $conn->expects($this->once())
          ->method('delete')
@@ -48,7 +49,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
   public function testFind()
   {
     $conn  = $this->getMockConnection(array('find'));
-    $table = $this->getMockForAbstractClass('Tabler\\Table', array($conn));
+    $table = new Table($conn);
 
     $conn->expects($this->once())
          ->method('find')
@@ -60,7 +61,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
   public function testFindAll()
   {
     $conn  = $this->getMockConnection(array('findAll'));
-    $table = $this->getMockForAbstractClass('Tabler\\Table', array($conn));
+    $table = new Table($conn);
 
     $conn->expects($this->once())
          ->method('findAll')
