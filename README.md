@@ -31,3 +31,22 @@ $users = $connection['users'];
 # SELECT * FROM users WHERE id = 1
 $users->find(['id' => 1]);
 ```
+
+A Silex provider is also included and takes a namespace option in addition
+to the same options as the DoctrineServiceProvider
+```php
+$app->register(new Tabler\Provider\TablerServiceProvider, [
+  'db.options' => [
+    'driver' => 'pdo_sqlite',
+    'path' => ':memory:',
+    'namespace' => 'App\\Model'
+  ]
+]);
+```
+
+Example controller
+```php
+$app->get('/users/{id}', function($id) {
+  $user = $app['db']['users']->find(['id' => $id]);
+});
+```
