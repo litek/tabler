@@ -3,7 +3,7 @@ namespace Tabler\Provider;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 
-class TablerServiceProvider extends DoctrineServiceProvider
+class DbServiceProvider extends DoctrineServiceProvider
 {
   public function register(Application $app)
   {
