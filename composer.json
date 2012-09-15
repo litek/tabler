@@ -1,0 +1,15 @@
+{
+  "name": "litek/tabler",
+  "minimum-stability": "dev",
+  "require": {
+    "doctrine/dbal": "2.4.*"
+  },
+  "require-dev": {
+    "silex/silex": "1.0.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Tabler": "src/"
+    }
+  }
+}
