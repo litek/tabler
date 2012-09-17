@@ -34,7 +34,9 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
       if (class_exists($class)) {
         $this->tables[$key] = new $class($this);
       } else {
-        $this->tables[$key] = new Table($this, $key);
+        $params  = $this->getParams();
+        $tableClass = isset($params['table_class']) ? $params['table_class'] : 'Tabler\Table';
+        $this->tables[$key] = new $tableClass($this, $key);
       }
     }
 
