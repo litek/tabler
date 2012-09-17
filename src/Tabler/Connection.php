@@ -11,21 +11,6 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
 
 
   /**
-   * Initializes a new instance of the Connection class.
-   *
-   * @param array $params  The connection parameters.
-   * @param Driver $driver
-   * @param Configuration $config
-   * @param EventManager $eventManager
-   */
-  public function __construct(array $params, Driver $driver, Configuration $config = null, EventManager $eventManager = null)
-  {
-    parent::__construct($params, $driver, $config, $eventManager);
-    $this->setFetchMode(\PDO::FETCH_OBJ);
-  }
-
-
-  /**
    * Check if table is loaded or if class exists
    *
    * @param string
@@ -103,20 +88,6 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
 
 
   /**
-   * Prepares and executes an SQL query and returns the first row of the result
-   * as an object.
-   *
-   * @param string $statement The SQL query.
-   * @param array $params The query parameters.
-   * @return object
-   */
-  public function fetchObject($statement, array $params = array())
-  {
-      return $this->executeQuery($statement, $params)->fetch(\PDO::FETCH_OBJ);
-  }
-
-
-  /**
    * Find single row
    *
    * @param string $table
@@ -135,7 +106,7 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
     $where  = implode(' = ? AND ', array_keys($identifier)).' = ?';
 
     $sql = sprintf('SELECT %s FROM %s WHERE %s LIMIT 1', $fields, $table, $where);
-    return $this->fetchObject($sql, array_values($identifier));
+    return $this->fetchAssoc($sql, array_values($identifier));
   }
 
 

@@ -56,15 +56,15 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
   public function testFind()
   {
-    $conn = $this->getMockConnection(array('fetchObject'));
+    $conn = $this->getMockConnection(array('fetchAssoc'));
     $conn->expects($this->once())
-         ->method('fetchObject')
+         ->method('fetchAssoc')
          ->with($this->equalTo('SELECT * FROM users WHERE id = ? LIMIT 1'), array(1));
     $conn->find('users', array('id' => 1));
 
-    $conn = $this->getMockConnection(array('fetchObject'));
+    $conn = $this->getMockConnection(array('fetchAssoc'));
     $conn->expects($this->once())
-         ->method('fetchObject')
+         ->method('fetchAssoc')
          ->with($this->equalTo('SELECT id, name FROM users WHERE id = ? LIMIT 1'), array(1));
     $conn->find('users', array('id', 'name'), array('id' => 1));
   }
