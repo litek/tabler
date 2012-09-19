@@ -92,8 +92,7 @@ class Table
    * @param string $table
    * @param array $columns
    * @param array $identifier The find criteria. An associative array containing column-value pairs.
-   * @param integer $limit
-   * @param integer $offset
+   * @param array $options
    * @return array
    */
   public function findAll(array $columns)

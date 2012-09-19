@@ -48,5 +48,7 @@ Example controller
 ```php
 $app->get('/users/{id}', function($id) {
   $user = $app['db']['users']->find(['id' => $id]);
+  // if there is no table class, this is equivalent to
+  // $app['db']->find('users', ['id' => $id])
 });
 ```

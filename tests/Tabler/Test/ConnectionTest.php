@@ -73,7 +73,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
   public function testFindAll()
   {
     $queries = array(
-      array(),
+      array(array()),
       array('SELECT * FROM users'),
 
       array(array('id', 'name')),
@@ -88,13 +88,13 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
       array(array('id', 'name'), array('id' => 1)),
       array('SELECT id, name FROM users WHERE id = ?', array(1)),
 
-      array(array('id', 'name'), array('id' => 1), 10),
+      array(array('id', 'name'), array('id' => 1), array('limit' => 10)),
       array('SELECT id, name FROM users WHERE id = ? LIMIT 10', array(1)),
 
-      array(array('id' => 1), 10),
+      array(array('id' => 1), array('limit' => 10)),
       array('SELECT * FROM users WHERE id = ? LIMIT 10', array(1)),
 
-      array(array('id', 'name'), array('id' => 1), 10, 20),
+      array(array('id', 'name'), array('id' => 1), array('limit' => 10, 'offset' => 20)),
       array('SELECT id, name FROM users WHERE id = ? LIMIT 10 OFFSET 20', array(1))
     );
 

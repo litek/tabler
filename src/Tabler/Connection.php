@@ -13,6 +13,7 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
   /**
    * Check if table is loaded or if class exists
    *
+   * @todo Should we return true when $this->tables[$key] exists, or just when the class exists?
    * @param string
    */
   public function offsetExists($key)
@@ -118,38 +119,28 @@ class Connection extends \Doctrine\DBAL\Connection implements \ArrayAccess
    * @param string $table
    * @param array $columns
    * @param array $identifier The find criteria. An associative array containing column-value pairs.
-   * @param integer $limit
-   * @param integer $offset
+   * @param array $options
    * @return array
    */
-  public function findAll($table, array $columns = array())
+  public function findAll($table, array $columns = array(), array $identifier = array(), array $options = array())
   {
-    $identifier = array();
-    $count = func_num_args();
-    $start = 2;
+    if (empty($columns)) {
+      $columns = array('*');
+    }
 
     if (!isset($columns[0])) {
+      $options = $identifier;
       $identifier = $columns;
       $columns = array('*');
     }
 
-    if ($count > $start) {
-      $arg = func_get_arg($start);
-      if (is_array($arg)) {
-        $identifier = $arg;
-        $start++;
-      }
-    }
-
-    $limit  = $count > $start ? func_get_arg($start++) : null;
-    $offset = $count > $start ? func_get_arg($start++) : null;
-
     $fields = implode($columns, ', ');
     $where  = !empty($identifier) ? ' WHERE '.implode(' = ? AND ', array_keys($identifier)).' = ?' : '';
-    $limit  = $limit ? sprintf(' LIMIT %d', $limit) : '';
-    $offset = $limit && $offset ? sprintf(' OFFSET %d', $offset) : '';
+    $order  = isset($options['order']) ? ' ORDER BY'.$options['order'] : '';
+    $limit  = isset($options['limit']) ? sprintf(' LIMIT %d', $options['limit']) : '';
+    $offset = isset($options['limit']) && isset($options['offset']) ? sprintf(' OFFSET %d', $options['offset']) : '';
 
-    $sql = 'SELECT '.$fields.' FROM '.$table.$where.$limit.$offset;
+    $sql = 'SELECT '.$fields.' FROM '.$table.$where.$order.$limit.$offset;
     return $this->fetchAll($sql, array_values($identifier));
   }
 }
