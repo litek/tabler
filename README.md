@@ -17,7 +17,7 @@ $connection->find('users', ['id', 'name'], ['id' => 1]);
 $connection->findAll('users');
 
 # SELECT * FROM users WHERE gender = 'm' LIMIT 10
-$connection->findAll('users', ['gender' => 'm'], 10);
+$connection->findAll('users', ['gender' => 'm'], ['limit' => 10]);
 ```
 
 Creates new classes under "namespace" by array access.
