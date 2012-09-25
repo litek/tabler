@@ -46,7 +46,7 @@ $app->register(new Tabler\Provider\DbServiceProvider, [
 
 Example controller
 ```php
-$app->get('/users/{id}', function($id) {
+$app->get('/users/{id}', function($id) use($app) {
   $user = $app['db']['users']->find(['id' => $id]);
   // if there is no table class, this is equivalent to
   // $app['db']->find('users', ['id' => $id])
